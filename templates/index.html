@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Assistant Search</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; background-color: #f9f9f9; color: #333; }
+        h1 { color: #2c3e50; text-align: center; }
+        .search-box { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 30px; text-align: center; }
+        input[type="text"] { width: 70%; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 12px 20px; font-size: 16px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px; }
+        button:hover { background-color: #2980b9; }
+        .answer-card { background: #e8f4fd; padding: 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #2980b9; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .answer-card h3 { margin-top: 0; color: #2c3e50; }
+        .chunk-card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid #e67e22; }
+        .source-tag { font-weight: bold; color: #e67e22; margin-bottom: 8px; font-size: 14px; }
+        .no-results { background: #fff3cd; color: #856404; padding: 15px; border-radius: 4px; border: 1px solid #ffeeba; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>Property Assistant Search</h1>
+    
+    <div class="search-box">
+        <form method="POST">
+            <input type="text" name="query" value="{{ query }}" placeholder="Ask a property question (e.g., monthly rent, parking space)..." required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    {% if searched %}
+        {% if answer %}
+            <div class="answer-card">
+                <h3>Assistant AI Answer</h3>
+                <p>{{ answer }}</p>
+            </div>
+        {% endif %}
+
+        <h2>Retrieved Source Chunks</h2>
+        {% if results %}
+            {% for res in results %}
+                <div class="chunk-card">
+                    <div class="source-tag">Source Document: {{ res.source }}</div>
+                    <p>{{ res.text }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                Please enter a valid question or no matching chunks were found for your query.
+            </div>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
