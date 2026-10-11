@@ -1,18 +1,20 @@
-# Property Document Chunking Pipeline
+# Property Document Chunker & Assistant Search Pipeline
 
-This repository contains a Python script designed to ingest raw property lease documents, split them into manageable text chunks of approximately 200 words, and export them into a structured JSON file for downstream assistant/RAG applications.
+This project implements a foundational data ingestion and retrieval pipeline for a property assistant workflow. It processes raw lease agreements, segments them using sentence-aware chunking, stores them in a structured JSON format, and provides a keyword-based search function to fetch the most relevant clauses.
+
+---
 
 ## Project Structure
-- `property_docs/`: Directory containing raw text files (`property_1.txt`, `property_2.txt`, `property_3.txt`).
-- `chunk_documents.py`: Python script to read, chunk, and export data.
-- `property_chunks.json`: Generated output containing text chunks and source mappings.
 
-## Prerequisites
-- Python 3.7 or higher installed on your system.
-
-## How to Run
-1. Clone the repository and navigate to the project folder.
-2. Ensure your sample documents are placed inside the `property_docs` directory.
-3. Run the script using your terminal or VS Code:
-   ```bash
-   python chunk_documents.py
+```text
+property-chunker/
+│
+├── property_docs/                 # Directory containing raw lease documents
+│   ├── property_1.txt
+│   ├── property_2.txt
+│   └── property_3.txt
+│
+├── chunk_documents.py             # Script for sentence-aware text chunking
+├── search.py                      # Keyword search function for retrieving top chunks
+├── property_chunks.json           # Generated JSON output containing text and source metadata
+└── README.md                      # Project documentation
