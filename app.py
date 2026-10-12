@@ -26,7 +26,7 @@ def index():
                 # 2. Create combined text (limited to 350 chars) and unique sorted sources
                 combined = " ".join(c['text'].strip() for c in top_chunks)[:350]
                 sources = sorted({c['source'] for c in top_chunks})
-                answer = f"Based on the documents, the answer is: {combined}. Sources: {', '.join(sources)}."
+                answer = f"Based on the documents, the answer is: {combined}."
             
     # 3. Pass answer and sources explicitly to the template
     return render_template(

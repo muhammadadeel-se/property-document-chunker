@@ -16,6 +16,7 @@
         .chunk-card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 5px solid #e67e22; }
         .source-tag { font-weight: bold; color: #e67e22; margin-bottom: 8px; font-size: 14px; }
         .no-results { background: #fff3cd; color: #856404; padding: 15px; border-radius: 4px; border: 1px solid #ffeeba; text-align: center; }
+        .source-list ul { margin: 5px 0 0 20px; padding: 0; }
     </style>
 </head>
 <body>
@@ -29,11 +30,22 @@
     </div>
 
     {% if searched %}
-        <!-- Render Answer Card Above Chunks as requested -->
         {% if answer %}
             <div class="answer-card">
                 <h3>Generated Summary & References</h3>
                 <p>{{ answer }}</p>
+                
+                <!-- Render individual source filenames using a loop -->
+                {% if sources %}
+                    <div class="source-list">
+                        <strong>Sources:</strong>
+                        <ul>
+                            {% for src in sources %}
+                                <li>{{ src }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
 
