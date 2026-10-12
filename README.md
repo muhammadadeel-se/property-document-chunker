@@ -1,3 +1,6 @@
+## 🚀 Live Demo
+You can access the live deployed application here: 
+👉 **[https://112233.pythonanywhere.com](https://112233.pythonanywhere.com)**
 # Property Assistant RAG Web Application
 
 A lightweight, Flask-based Retrieval-Augmented Generation (RAG) web application designed to search through property documents using semantic vector embeddings and generate source-attributed summaries.
