@@ -6,31 +6,37 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def index():
     query = ""
-    results = []
+    top_chunks = []
     answer = ""
+    sources = []
     searched = False
     
     if request.method == "POST":
         query = request.form.get("query", "").strip()
         searched = True
         if query:
-            # 1. Retrieve top 3 relevant chunks
-            results = search_property_chunks(query)
+            # Retrieve top chunks from search module
+            top_chunks = search_property_chunks(query)
             
-            if results:
-                # 2. Combine key info from chunks using string processing
-                combined_info = " ".join([r['text'].strip() for r in results])
-                
-                # 3. Extract unique source documents
-                sources = list(set([r['source'] for r in results]))
-                sources_str = ", ".join(sources)
-                
-                # 4. Format using the required template
-                answer = f"Based on the documents, the answer is: {combined_info[:350]}... Sources: {sources_str}."
+            # 1. Guard check for empty results
+            if not top_chunks:
+                answer = "No information found"
+                sources = []
             else:
-                answer = "No information found matching your query."
+                # 2. Create combined text (limited to 350 chars) and unique sorted sources
+                combined = " ".join(c['text'].strip() for c in top_chunks)[:350]
+                sources = sorted({c['source'] for c in top_chunks})
+                answer = f"Based on the documents, the answer is: {combined}. Sources: {', '.join(sources)}."
             
-    return render_template("index.html", query=query, results=results, answer=answer, searched=searched)
+    # 3. Pass answer and sources explicitly to the template
+    return render_template(
+        "index.html", 
+        query=query, 
+        results=top_chunks, 
+        answer=answer, 
+        sources=sources, 
+        searched=searched
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
